@@ -1,24 +1,34 @@
-package org.example;
+package org.test;
 
+import org.apache.commons.lang3.builder.ToStringExclude;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class TestSelenium {
-    public static void main(String[] args) {
-       // System.setProperty("webdriver.chrome.driver", "/Users/priyanka/IdeaProjects/Test/Driver/chromedriver");
-        WebDriver driver = new ChromeDriver();
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
+public class TestSelenium {
+    WebDriver driver;
+
+    @BeforeMethod
+    public void setup() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless"); // Enable headless mode
+        driver = new ChromeDriver(options);
+    }
+
+    @Test
+    public void testFast() {
         try {
             // Open the Fast.com website
             driver.get("https://fast.com");
@@ -61,7 +71,12 @@ public class TestSelenium {
             e.printStackTrace();
         } finally {
             // Close the browser
-            driver.quit();
+            driver.close();
         }
+    }
+
+    public void tearDown()
+    {
+        driver.quit();
     }
 }
